@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Aplicacion visual y accesible para practicar Tai Chi basico con instrucciones paso a paso."
+    />
+    <title>Tai Chi Suave 55+</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="node_modules/gsap/dist/gsap.min.js"></script>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="root"
+      data-width="390"
+      data-height="844"
+      data-start="0"
+    >
+      <a class="skip-link" href="#practice">Saltar a la practica</a>
+
+      <header class="app-header" role="banner">
+      <div>
+        <p class="eyebrow">Rutina guiada de 8 a 10 minutos</p>
+        <h1>Tai Chi suave para empezar</h1>
+        <p class="intro">
+          Aplicacion visual y accesible para que personas de 55 anos o mas practiquen Tai Chi
+          basico, con instrucciones paso a paso, ritmo ajustable y enfoque en seguridad.
+        </p>
+      </div>
+      <div class="header-actions" aria-label="Ajustes rapidos">
+        <button id="fontButton" class="secondary-button" type="button">Texto grande</button>
+        <button id="contrastButton" class="secondary-button" type="button">Alto contraste</button>
+      </div>
+      </header>
+
+      <main id="practice" class="app-shell">
+      <section class="safety-panel" aria-labelledby="safety-title">
+        <h2 id="safety-title">Antes de empezar</h2>
+        <ul>
+          <li>Consulta con un profesional si tienes dudas o condiciones previas.</li>
+          <li>Usa ropa comoda y calzado plano con buen agarre.</li>
+          <li>Detente si aparece dolor, mareo o falta de aire.</li>
+          <li>Flexiona poco las rodillas y evita forzar articulaciones.</li>
+        </ul>
+      </section>
+
+      <section class="progress-strip" aria-label="Resumen de progreso">
+        <div>
+          <span class="metric-label">Practicas</span>
+          <strong id="practiceCount">0</strong>
+        </div>
+        <div>
+          <span class="metric-label">Ultima sesion</span>
+          <strong id="lastPractice">Sin datos</strong>
+        </div>
+        <div>
+          <span class="metric-label">Modo</span>
+          <strong id="modeLabel">De pie</strong>
+        </div>
+      </section>
+
+      <section class="routine-layout" aria-label="Rutina de Tai Chi">
+        <article class="exercise-view" aria-labelledby="exerciseTitle">
+          <div class="exercise-topline">
+            <p id="phaseLabel" class="phase-label">Calentamiento</p>
+            <p id="exerciseMeta" class="exercise-meta">Muy baja dificultad</p>
+          </div>
+
+          <h2 id="exerciseTitle">Postura inicial y cuello suave</h2>
+          <p id="exerciseGoal" class="exercise-goal">
+            Preparar cuello, hombros y postura sin tension.
+          </p>
+
+          <div class="timer-row" aria-label="Temporizador">
+            <div class="timer" id="timerDisplay" aria-live="polite">01:30</div>
+            <div class="speed-control" aria-label="Velocidad de practica">
+              <button id="slowerButton" type="button" aria-label="Practicar mas lento">-</button>
+              <span id="speedLabel">1x</span>
+              <button id="fasterButton" type="button" aria-label="Practicar mas rapido">+</button>
+            </div>
+          </div>
+
+          <div class="visual-stage" aria-label="Demostracion visual del ejercicio">
+            <div class="video-slot">
+              <video id="demoVideo" controls preload="metadata" poster="" aria-label="Video real de demostracion">
+                Tu navegador no tiene aun un video cargado. Usa la animacion guiada de esta pantalla.
+              </video>
+              <p>
+                Espacio preparado para video real. Coloca un archivo en
+                <code>assets/tai-chi-demo.mp4</code> cuando tengas una demostracion grabada.
+              </p>
+            </div>
+
+            <div class="animation-panel" aria-label="Animacion vectorial del movimiento">
+              <svg
+                id="poseSvg"
+                viewBox="0 0 260 260"
+                role="img"
+                aria-labelledby="poseTitle poseDesc"
+              >
+                <title id="poseTitle">Figura guia de Tai Chi</title>
+                <desc id="poseDesc">
+                  Animacion simple que marca brazos, tronco, rodillas y respiracion del ejercicio.
+                </desc>
+                <circle class="breath-ring" cx="130" cy="132" r="78" />
+                <line class="ground" x1="46" y1="230" x2="214" y2="230" />
+                <g id="bodyPose" class="pose pose-center">
+                  <circle class="head" cx="130" cy="54" r="18" />
+                  <line class="body" x1="130" y1="74" x2="130" y2="142" />
+                  <line class="arm left-arm" x1="130" y1="90" x2="86" y2="126" />
+                  <line class="arm right-arm" x1="130" y1="90" x2="174" y2="126" />
+                  <line class="leg left-leg" x1="130" y1="142" x2="92" y2="222" />
+                  <line class="leg right-leg" x1="130" y1="142" x2="168" y2="222" />
+                  <circle class="joint" cx="130" cy="90" r="6" />
+                  <circle class="joint knee-left" cx="108" cy="188" r="6" />
+                  <circle class="joint knee-right" cx="152" cy="188" r="6" />
+                </g>
+                <path id="motionCue" class="motion-cue" d="M72 135 C105 92, 155 92, 188 135" />
+              </svg>
+              <p id="visualHint" class="visual-hint">
+                Hombros bajos, espalda larga y respiracion suave.
+              </p>
+            </div>
+          </div>
+
+          <div class="controls" aria-label="Controles de practica">
+            <button id="prevButton" type="button">Anterior</button>
+            <button id="playButton" class="primary-button" type="button">Iniciar</button>
+            <button id="nextButton" type="button">Siguiente</button>
+          </div>
+
+          <div class="options-row">
+            <label class="toggle">
+              <input id="seatedMode" type="checkbox" />
+              <span>Modo sentado o bajo impacto</span>
+            </label>
+            <label class="toggle">
+              <input id="voiceMode" type="checkbox" />
+              <span>Guia hablada</span>
+            </label>
+          </div>
+        </article>
+
+        <aside class="step-panel" aria-labelledby="stepsTitle">
+          <h2 id="stepsTitle">Pasos del ejercicio</h2>
+          <ol id="stepList"></ol>
+          <div id="liveMessage" class="live-message" aria-live="assertive">
+            Listo para empezar con calma.
+          </div>
+
+          <h3>Precaucion principal</h3>
+          <p id="cautionText">
+            No fuerces el cuello. Mantente dentro de un rango comodo.
+          </p>
+
+          <div class="routine-list" aria-label="Ejercicios de la rutina">
+            <h3>Rutina completa</h3>
+            <div id="routineButtons"></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="camera-section" aria-labelledby="cameraTitle">
+        <div>
+          <h2 id="cameraTitle">Camara espejo opcional</h2>
+          <p>
+            Activa la camara solo si quieres observar tu postura. El video no se guarda ni se
+            envia a ningun servidor.
+          </p>
+        </div>
+        <div class="camera-actions">
+          <button id="cameraButton" class="secondary-button" type="button">Activar camara</button>
+          <button id="completeButton" class="primary-button" type="button">Marcar sesion hecha</button>
+        </div>
+        <div id="cameraMount"></div>
+      </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>
+          Esta guia no sustituye consejo medico. Practica despacio, respira con calma y descansa si
+          lo necesitas.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const rootTimeline = gsap.timeline({ paused: true }).to("#root", { opacity: 1, duration: 555 }, 0);
+      window.__timelines["root"] = rootTimeline;
+      window.__timelines["senderismo-valencia-promo"] = rootTimeline;
+      window.__timelines["tai-chi-suave-55"] = rootTimeline;
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
